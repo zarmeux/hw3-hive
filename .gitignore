@@ -1,0 +1,12 @@
+.DS_Store
+._*
+*.tar.gz
+*.jar
+*.password
+*secret*
+metastore_db/
+derby.log
+hive-site.xml
+hivemetastore-site.xml
+cluster.local.env
+evidence/*.log

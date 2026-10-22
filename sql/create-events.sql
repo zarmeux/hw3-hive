@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS hw3;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS hw3.events (
+  event_id BIGINT,
+  user_id BIGINT,
+  event_type STRING
+)
+PARTITIONED BY (event_date STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/hive/warehouse-external/hw3/events';
+
+DESCRIBE FORMATTED hw3.events;
