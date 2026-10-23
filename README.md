@@ -75,7 +75,7 @@ sudo systemctl status hive-metastore hive-hiveserver2 --no-pager
 sudo ss -lntp | grep -E ':(9083|10000|10002)\b'
 ```
 
-В `check.sh` мы одновременно запускаем два клиента Beeline. Оба должны выполнить `SHOW DATABASES` и `SELECT 1` без ошибок. Так мы проверяем работу нескольких подключений, но большую нагрузку этим тестом не моделируем.
+В `check.sh` мы запускаем два клиента Beeline и ждём, пока оба подключатся. Только после этого отправляем каждому `SHOW DATABASES` и `SELECT 1` и проверяем ответы. Так мы точно держим две сессии открытыми одновременно. Большую нагрузку этим тестом не моделируем.
 
 Если что-то не запустилось, смотрим `/var/log/hive/metastore.log`, `/var/log/hive/hiveserver2.log` и `/var/log/hive/hive.log`. Ещё можно посмотреть службы через `journalctl -u hive-metastore -u hive-hiveserver2`.
 

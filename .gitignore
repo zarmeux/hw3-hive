@@ -10,3 +10,4 @@ hive-site.xml
 hivemetastore-site.xml
 cluster.local.env
 evidence/*.log
+evidence/recheck-*/
