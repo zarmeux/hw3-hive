@@ -115,7 +115,6 @@ runuser -u hadoop -- env HADOOP_CONF_DIR=/etc/hadoop-yarn /opt/hadoop/bin/hdfs d
 runuser -u hadoop -- env HADOOP_CONF_DIR=/etc/hadoop-yarn /opt/hadoop/bin/hdfs dfs -chmod 1777 /tmp/hive
 HIVE_ENV=(JAVA_HOME="$JAVA" HADOOP_HOME=/opt/hadoop HADOOP_CONF_DIR=/etc/hive/hadoop HIVE_HOME=/opt/hive HIVE_CONF_DIR=/etc/hive HADOOP_HEAPSIZE=512)
 if ! runuser -u hive -- env "${HIVE_ENV[@]}" /opt/hive/bin/schematool -dbType postgres -info; then
-  # Создаём схему только в пустой БД. Если там уже есть таблицы, сначала разбираемся с ошибкой.
   TABLES=$(runuser -u postgres -- psql -d hive_metastore -tAc "SELECT count(*) FROM information_schema.tables WHERE table_schema='public'")
   [[ $TABLES -eq 0 ]] || { echo 'Metastore database is not empty; inspect schema before retry'; exit 1; }
   runuser -u hive -- env "${HIVE_ENV[@]}" /opt/hive/bin/schematool -dbType postgres -initSchema

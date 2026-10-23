@@ -4,7 +4,6 @@ source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
 [[ $# -eq 2 && -f $1 ]] || { echo "Usage: sudo bash $0 CSV_FILE YYYY-MM-DD" >&2; exit 1; }
 input=$1
 partition_date=$2
-# Сначала проверяем дату, потом используем её в SQL, имени блокировки и пути HDFS.
 python3 - "$partition_date" <<'PY'
 import datetime, re, sys
 s=sys.argv[1]
@@ -25,7 +24,6 @@ cleanup() {
 }
 trap cleanup EXIT
 install -o hive -g hive -m 0400 "$input" "$tmpdir/events.csv"
-# В нашем примере используем простой CSV без кавычек.
 python3 - "$tmpdir/events.csv" <<'PY'
 import pathlib, re, sys
 lines=pathlib.Path(sys.argv[1]).read_text(encoding='utf-8').splitlines()

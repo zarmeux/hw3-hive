@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Подключаем из скриптов с sudo, команды выполняем от пользователя hive.
 [[ $EUID -eq 0 ]] || { echo 'Run this script with sudo bash.' >&2; exit 1; }
 HIVE_ENV=(
   JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
